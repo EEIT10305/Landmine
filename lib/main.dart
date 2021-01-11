@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/FileProviderPage.dart';
-import 'package:flutter_app/pages/SelectionPage.dart';
-import 'package:flutter_app/util/LifeCycleManager.dart';
-import 'package:flutter_app/widgets/ShowImage.dart';
-import 'package:flutter_app/widgets/Square.dart';
+import 'package:landmine/pages/FileProviderPage.dart';
+import 'package:landmine/pages/SelectionPage.dart';
+import 'package:landmine/util/LifeCycleManager.dart';
+import 'package:landmine/widgets/ShowImage.dart';
+import 'package:landmine/widgets/Square.dart';
 import 'widgets/Landmine.dart';
 
 void main() {
