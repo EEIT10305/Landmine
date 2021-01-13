@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:landmine/pages/FileProviderPage.dart';
+import 'package:landmine/pages/InheritedPracticePage.dart';
 import 'package:landmine/pages/SelectionPage.dart';
 import 'package:landmine/util/LifeCycleManager.dart';
 import 'package:landmine/widgets/ShowImage.dart';
@@ -60,11 +61,15 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child:HomeScreen(),//把下一頁的值傳回上一頁
+        child: MyTree(),//InheritedWidget範例
+
+//        child:HomeScreen(),//把下一頁的值傳回上一頁
+
 //        child:Landmine(
 //            data:data,
 //            flags:flags,
 //        ),//沒寫的踩地雷
+
 //        child:FileProviderPage(
 //          storage: InfoStorage(),
 //          title: '日記',
