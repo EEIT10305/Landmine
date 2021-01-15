@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:landmine/pages/FileProviderPage.dart';
 import 'package:landmine/pages/InheritedPracticePage.dart';
@@ -5,18 +7,39 @@ import 'package:landmine/pages/SelectionPage.dart';
 import 'package:landmine/util/LifeCycleManager.dart';
 import 'package:landmine/widgets/ShowImage.dart';
 import 'package:landmine/widgets/Square.dart';
+import 'package:landmine/widgets/dialogs/ShowAlertDialog.dart';
 import 'widgets/Landmine.dart';
 
 void main() {
-  runApp(
-    LifeCycleManager(
-      child: MyApp(),
-    ),
-  );
+   runZoned(() => runApp(
+     LifeCycleManager(
+       child: MyApp(),
+     ),
+   ),
+     zoneSpecification: new ZoneSpecification(
+       errorCallback :(Zone self, ZoneDelegate parent,
+           Zone zone, Object error, StackTrace stackTrace){
+         parent.print(zone, stackTrace.toString());
+         return;
+       },
+       print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
+         parent.print(zone, "Intercepted: $line");
+       }),
+     onError: (e, stackTrace) => print('runZonedError: $e $stackTrace'),
+   );
+
+    FlutterError.onError = (FlutterErrorDetails details) {
+      runApp(
+        MaterialApp(
+          home: ShowAlertDialog(content : details.toString()),
+        ),
+      );
+    };
 }
 
+
+
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -54,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
     [false, false, false, false, false],
     [false, false, false, false, false],
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: MyTree(),//InheritedWidget範例
+         child: MyTree(),//InheritedWidget範例
 
 //        child:HomeScreen(),//把下一頁的值傳回上一頁
 
@@ -69,11 +93,6 @@ class _MyHomePageState extends State<MyHomePage> {
 //            data:data,
 //            flags:flags,
 //        ),//沒寫的踩地雷
-
-//        child:FileProviderPage(
-//          storage: InfoStorage(),
-//          title: '日記',
-//        ), //寫檔範例
       ),
     );
   }
