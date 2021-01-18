@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:landmine/pages/FileProviderPage.dart';
-import 'package:landmine/pages/InheritedPracticePage.dart';
-import 'package:landmine/pages/SelectionPage.dart';
+import 'package:landmine/routers/RouterUtil.dart';
+
 import 'package:landmine/util/LifeCycleManager.dart';
 import 'package:landmine/widgets/ShowImage.dart';
 import 'package:landmine/widgets/Square.dart';
 import 'package:landmine/widgets/dialogs/ShowAlertDialog.dart';
-import 'widgets/Landmine.dart';
+import 'package:landmine/widgets/pages/FileProviderPage.dart';
+import 'package:landmine/widgets/pages/InheritedPracticePage.dart';
 
 void main() {
    runZoned(() => runApp(
@@ -37,8 +37,6 @@ void main() {
     };
 }
 
-
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -48,6 +46,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      routes:RouterUtil.router,
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -63,20 +62,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List data = [
-    [1, -1, 1, 0, 0],
-    [1, 1, 1, 0, 0],
-    [1, 1, 2, 1, 1],
-    [1, -1, 2, -1, 1],
-    [1, 1, 2, 1, 1]
-  ];
-  List flags = [
-    [false, false, false, false, false],
-    [false, false, false, false, false],
-    [false, false, false, false, false],
-    [false, false, false, false, false],
-    [false, false, false, false, false],
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -85,14 +70,22 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-         child: MyTree(),//InheritedWidget範例
-
-//        child:HomeScreen(),//把下一頁的值傳回上一頁
-
-//        child:Landmine(
-//            data:data,
-//            flags:flags,
-//        ),//沒寫的踩地雷
+         child: Column(
+           children: [
+             FlatButton(onPressed: (){
+               Navigator.of(context).pushNamed('landmine');
+             }, child: Text('踩地雷(未完成)')),
+             FlatButton(onPressed: (){
+               Navigator.of(context).pushNamed('homescreen');
+             }, child: Text('資料丟給下一頁再傳回來')),
+             FlatButton(onPressed: (){
+               Navigator.of(context).pushNamed('mytree');
+             }, child: Text('inheritedWidget練習')),
+             FlatButton(onPressed: (){
+               Navigator.of(context).pushNamed('fileprovider', arguments: {'storage':InfoStorage(),'title':'標題'});
+             }, child: Text('寫檔讀檔練習'))
+           ],
+         )
       ),
     );
   }

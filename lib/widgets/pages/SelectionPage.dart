@@ -4,18 +4,24 @@ import 'package:flutter/material.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SelectionButton(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(''),
+      ),
+      body: Center(
+        child: SelectionButton(),
+      ),
     );
   }
 }
 
 class SelectionButton extends StatelessWidget {
   String result;
+
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
-      child: Text(result??'課程選擇'),
+      child: Text(result ?? '課程選擇'),
       onPressed: () {
         _navigatorAndDisplaySelection(context);
       },
@@ -23,7 +29,7 @@ class SelectionButton extends StatelessWidget {
   }
 
   _navigatorAndDisplaySelection(BuildContext context) async {
-     result = await Navigator.push(
+    result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SelectionScreen()),
     );
