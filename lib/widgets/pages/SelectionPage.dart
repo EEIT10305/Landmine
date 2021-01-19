@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../MyScaffold.dart';
+
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -45,8 +47,8 @@ class SelectionButton extends StatelessWidget {
 class SelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
+    return MyScaffold(
+      child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

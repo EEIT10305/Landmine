@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:landmine/widgets/Landmine.dart';
 
+import '../MyScaffold.dart';
+
 class LandminePage extends StatefulWidget {
   @override
   _LandminePageState createState() => _LandminePageState();
@@ -25,11 +27,9 @@ class _LandminePageState extends State<LandminePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(''),
-      ),
-      body: Container(
+    return MyScaffold(
+      title: '',
+      child: Container(
         child: Landmine(
           data: data,
           flags: flags,

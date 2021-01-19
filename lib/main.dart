@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:landmine/routers/RouterUtil.dart';
 
 import 'package:landmine/util/LifeCycleManager.dart';
+import 'package:landmine/widgets/FirstButton.dart';
+import 'package:landmine/widgets/MyScaffold.dart';
 import 'package:landmine/widgets/ShowImage.dart';
 import 'package:landmine/widgets/Square.dart';
 import 'package:landmine/widgets/dialogs/ShowAlertDialog.dart';
@@ -11,30 +13,29 @@ import 'package:landmine/widgets/pages/FileProviderPage.dart';
 import 'package:landmine/widgets/pages/InheritedPracticePage.dart';
 
 void main() {
-   runZoned(() => runApp(
-     LifeCycleManager(
-       child: MyApp(),
-     ),
-   ),
-     zoneSpecification: new ZoneSpecification(
-       errorCallback :(Zone self, ZoneDelegate parent,
-           Zone zone, Object error, StackTrace stackTrace){
-         parent.print(zone, stackTrace.toString());
-         return;
-       },
-       print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
-         parent.print(zone, "Intercepted: $line");
-       }),
-     onError: (e, stackTrace) => print('runZonedError: $e $stackTrace'),
-   );
+  runZoned(
+    () => runApp(
+      LifeCycleManager(
+        child: MyApp(),
+      ),
+    ),
+    zoneSpecification: new ZoneSpecification(errorCallback: (Zone self,
+        ZoneDelegate parent, Zone zone, Object error, StackTrace stackTrace) {
+      parent.print(zone, stackTrace.toString());
+      return;
+    }, print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
+      parent.print(zone, "Intercepted: $line");
+    }),
+    onError: (e, stackTrace) => print('runZonedError: $e $stackTrace'),
+  );
 
-    FlutterError.onError = (FlutterErrorDetails details) {
-      runApp(
-        MaterialApp(
-          home: ShowAlertDialog(content : details.toString()),
-        ),
-      );
-    };
+  FlutterError.onError = (FlutterErrorDetails details) {
+    runApp(
+      MaterialApp(
+        home: ShowAlertDialog(content: details.toString()),
+      ),
+    );
+  };
 }
 
 class MyApp extends StatelessWidget {
@@ -43,11 +44,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.grey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      routes:RouterUtil.router,
+      routes: RouterUtil.router,
       home: MyHomePage(title: 'Flutter Demo Home Page'),
+//      builder: (context, widget) {
+//        return MediaQuery(
+//          //設置文字大小不隨系統設置改變
+//          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+//          child: widget,
+//        );
+//      },
     );
   }
 }
@@ -62,30 +70,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-         child: Column(
-           children: [
-             FlatButton(onPressed: (){
-               Navigator.of(context).pushNamed('landmine');
-             }, child: Text('踩地雷(未完成)')),
-             FlatButton(onPressed: (){
-               Navigator.of(context).pushNamed('homescreen');
-             }, child: Text('資料丟給下一頁再傳回來')),
-             FlatButton(onPressed: (){
-               Navigator.of(context).pushNamed('mytree');
-             }, child: Text('inheritedWidget練習')),
-             FlatButton(onPressed: (){
-               Navigator.of(context).pushNamed('fileprovider', arguments: {'storage':InfoStorage(),'title':'標題'});
-             }, child: Text('寫檔讀檔練習'))
-           ],
-         )
+    return MyScaffold(
+      child: Container(
+        child: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FirstButton(
+              routerName: 'landmine',
+              buttonWord: '踩地雷(未完成)',
+            ),
+            FirstButton(
+              routerName: 'homescreen',
+              buttonWord: '資料丟給下一頁再傳回來',
+            ),
+            FirstButton(
+              routerName: 'mytree',
+              buttonWord: 'inheritedWidget練習',
+            ),
+            FirstButton(
+              routerName: 'fileprovider',
+              buttonWord: '寫檔讀檔練習',
+              args: {'storage': InfoStorage(), 'title': '標題'},
+            ),
+          ],
+        )),
       ),
     );
   }

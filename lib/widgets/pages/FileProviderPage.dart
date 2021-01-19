@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../MyScaffold.dart';
+
 class FileProviderPage extends StatefulWidget {
   final InfoStorage storage = InfoStorage();
   final String title;
@@ -46,11 +48,9 @@ class _FileProviderPageState extends State<FileProviderPage> {
   Widget build(BuildContext context) {
     Map args = ModalRoute.of(context).settings.arguments;
     print(args);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(args['title']),
-      ),
-      body: Column(
+    return MyScaffold(
+      title: args['title'],
+      child: Column(
         verticalDirection: VerticalDirection.down,
         children: [
 //        Expanded(

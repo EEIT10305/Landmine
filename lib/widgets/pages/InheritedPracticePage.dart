@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../MyScaffold.dart';
+
 class Item {
   String reference;
+
   Item(this.reference);
 }
 
@@ -25,8 +28,8 @@ class MyInheritedWidget extends StatefulWidget {
   @override
   MyInheritedWidgetState createState() => MyInheritedWidgetState();
 
-  static MyInheritedWidgetState of(
-      BuildContext context, {bool rebuild = true}) {
+  static MyInheritedWidgetState of(BuildContext context,
+      {bool rebuild = true}) {
     return (rebuild
             ? context.inheritFromWidgetOfExactType(_Myinherited) as _Myinherited
             : context.ancestorWidgetOfExactType(_Myinherited) as _Myinherited)
@@ -39,7 +42,7 @@ class MyInheritedWidgetState extends State<MyInheritedWidget> {
 
   int get itemsCount => _items.length;
 
-  void addItem(String reference){
+  void addItem(String reference) {
     print(_items);
     setState(() {
       _items.add(Item(reference));
@@ -64,11 +67,9 @@ class _MyTreeState extends State<MyTree> {
   @override
   Widget build(BuildContext context) {
     return MyInheritedWidget(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('InheritedWidgetPractice'),
-        ),
-        body: Column(
+      child: MyScaffold(
+        title: 'InheritedWidgetPractice',
+        child: Column(
           children: [
             WidgetA(),
             Container(
@@ -81,7 +82,7 @@ class _MyTreeState extends State<MyTree> {
               ),
             ),
           ],
-          ),
+        ),
       ),
     );
   }
@@ -90,7 +91,8 @@ class _MyTreeState extends State<MyTree> {
 class WidgetA extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-  final MyInheritedWidgetState state = MyInheritedWidget.of(context, rebuild: false);
+    final MyInheritedWidgetState state =
+        MyInheritedWidget.of(context, rebuild: false);
     return Container(
       child: RaisedButton(
         child: Text('Add Item'),
@@ -105,7 +107,7 @@ class WidgetA extends StatelessWidget {
 class WidgetB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-   final MyInheritedWidgetState state = MyInheritedWidget.of(context);
+    final MyInheritedWidgetState state = MyInheritedWidget.of(context);
     return Text('${state.itemsCount}');
   }
 }
