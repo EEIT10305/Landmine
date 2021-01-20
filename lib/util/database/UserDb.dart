@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'file:///C:/LandmineGithub/landmine/lib/util/database/UserScript.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
+
+import 'UserScript.dart';
 
 class UserDb {
   static final UserDb _instance = UserDb._();
