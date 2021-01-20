@@ -87,7 +87,7 @@ class InfoStorage {
   Future<String> readInfo() async {
     try {
       final file = await _localFile;
-      String info = await file.readAsStringSync();
+      String info = file.readAsStringSync();
       print(info);
       return info;
     } catch (e) {

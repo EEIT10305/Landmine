@@ -6,28 +6,33 @@ import 'package:landmine/routers/RouterUtil.dart';
 import 'package:landmine/util/LifeCycleManager.dart';
 import 'package:landmine/widgets/FirstButton.dart';
 import 'package:landmine/widgets/MyScaffold.dart';
-import 'package:landmine/widgets/ShowImage.dart';
-import 'package:landmine/widgets/Square.dart';
 import 'package:landmine/widgets/dialogs/ShowAlertDialog.dart';
 import 'package:landmine/widgets/pages/FileProviderPage.dart';
-import 'package:landmine/widgets/pages/InheritedPracticePage.dart';
 
 void main() {
-  runZoned(
-    () => runApp(
-      LifeCycleManager(
-        child: MyApp(),
-      ),
-    ),
-    zoneSpecification: new ZoneSpecification(errorCallback: (Zone self,
-        ZoneDelegate parent, Zone zone, Object error, StackTrace stackTrace) {
-      parent.print(zone, stackTrace.toString());
-      return;
-    }, print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
-      parent.print(zone, "Intercepted: $line");
-    }),
-    onError: (e, stackTrace) => print('runZonedError: $e $stackTrace'),
-  );
+  // runZoned(
+  //   () => runApp(
+  //     LifeCycleManager(
+  //       child: MyApp(),
+  //     ),
+  //   ),
+  //   zoneSpecification: new ZoneSpecification(errorCallback: (Zone self,
+  //       ZoneDelegate parent, Zone zone, Object error, StackTrace stackTrace) {
+  //     parent.print(zone, stackTrace.toString());
+  //     return;
+  //   }, print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
+  //     parent.print(zone, "Intercepted: $line");
+  //   }),
+  //   onError: (e, stackTrace) => print('runZonedError: $e $stackTrace'),
+  // );
+
+  runZonedGuarded(() {
+    runApp(LifeCycleManager(
+      child: MyApp(),
+    ));
+  }, (Object error, StackTrace stack) {
+    print('runZonedError: $error $stack');
+  });
 
   FlutterError.onError = (FlutterErrorDetails details) {
     runApp(
