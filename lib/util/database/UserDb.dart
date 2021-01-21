@@ -55,6 +55,11 @@ class UserDb {
     return await conn.query(tableName);
   }
 
+  Future<List<Map<String, dynamic>>> queryById(String tableName, String id) async{
+    Database conn = await getDbConnection();
+    return await conn.query(tableName, where: 'USER_ID=?', whereArgs: [id]);
+  }
+
   Future<int> insert(Map<String, dynamic> row, String tableName) async{
     Database conn = await getDbConnection();
     return conn.insert(tableName, row);
@@ -62,12 +67,12 @@ class UserDb {
 
   Future<int> delete(String id, String tableName) async{
     Database conn = await getDbConnection();
-    return conn.delete(tableName, where: 'id=?', whereArgs: [id]);
+    return conn.delete(tableName, where: 'USER_ID=?', whereArgs: [id]);
   }
 
   Future<int> update(Map<String, dynamic> row, String tableName) async{
     Database conn = await getDbConnection();
-    return conn.update(tableName, row, where: 'id=?', whereArgs: [row['id']]);
+    return conn.update(tableName, row, where: 'USER_ID=?', whereArgs: [row['id']]);
   }
 
   Future closeDb() async{

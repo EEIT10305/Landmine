@@ -11,6 +11,6 @@ class RouterUtil{
     "mytree": (context) => MyTree(),
     "homescreen":(context) => HomeScreen(),
     "fileprovider":(context) => FileProviderPage(),
-    "showdata":(context) => ShowData()
+    "dbexample":(context) => DbExamplePage()
   };
 }

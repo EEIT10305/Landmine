@@ -18,6 +18,11 @@ class UserManager {
     return users.map((e)=>User.fromJson(e)).toList();
   }
 
+  Future<List<User>> queryById(String id) async{
+    List<Map<String, dynamic>> users = await db.queryById(tableName, id);
+    return users.map((e)=>User.fromJson(e)).toList();
+  }
+
   void insert(User user) async{
     await db.insert(user.toJson(), tableName);
   }
