@@ -34,13 +34,13 @@ void main() {
     print('runZonedError: $error $stack');
   });
 
-  FlutterError.onError = (FlutterErrorDetails details) {
-    runApp(
-      MaterialApp(
-        home: ShowAlertDialog(content: details.toString()),
-      ),
-    );
-  };
+//  FlutterError.onError = (FlutterErrorDetails details) {
+//    runApp(
+//      MaterialApp(
+//        home: ShowAlertDialog(content: details.toString()),
+//      ),
+//    );
+//  };
 }
 
 class MyApp extends StatelessWidget {
@@ -99,6 +99,10 @@ class _MyHomePageState extends State<MyHomePage> {
               routerName: 'fileprovider',
               buttonWord: '寫檔讀檔練習',
               args: {'storage': InfoStorage(), 'title': '標題'},
+            ),
+            FirstButton(
+              routerName: 'dbexample',
+              buttonWord: 'db',
             ),
           ],
         )),

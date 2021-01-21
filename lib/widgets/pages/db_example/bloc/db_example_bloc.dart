@@ -1,11 +1,25 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:landmine/controllers/DbExampleController.dart';
 import 'package:landmine/managers/UserManager.dart';
 import 'db_example_event.dart';
 import 'db_example_state.dart';
 
 class DbExampleBloc extends Bloc<DbExampleEvent, DbExampleState> {
+  DbExampleController _dbExampleController;
+
   @override
   DbExampleState get initialState => InitialFirePrmState();
+
+  DbExampleBloc(){
+    _initialData();
+  }
+
+  /*
+   * 初始化資料
+   * */
+  void _initialData(){
+    _dbExampleController = DbExampleController();
+  }
 
   @override
   Stream<DbExampleState> mapEventToState(DbExampleEvent event) async* {
@@ -14,15 +28,8 @@ class DbExampleBloc extends Bloc<DbExampleEvent, DbExampleState> {
     }
   }
 
-  Stream<DbExampleState> _mapQuery() async*{
-    UserManager userManager = UserManager.instance;
-//    userManager.insert(User(
-//        uSERID: '001',
-//        uSERNAME: '一號',
-//        eMAIL: 'one@gmail.com',
-//        pASSWORD: 'onepass',
-//        uSERAUTHORITY: '0'));
 
-    yield QueryState(await userManager.queryAll());
+  Stream<DbExampleState> _mapQuery() async*{
+    yield QueryState(await _dbExampleController.firstDbMethod());
   }
 }

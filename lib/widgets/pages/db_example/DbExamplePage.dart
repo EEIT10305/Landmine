@@ -4,12 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:landmine/widgets/MyScaffold.dart';
 import 'bloc/bloc.dart';
 
-class ShowData extends StatefulWidget {
+class DbExamplePage extends StatefulWidget {
   @override
-  _ShowDataState createState() => _ShowDataState();
+  _DbExamplePageState createState() => _DbExamplePageState();
 }
 
-class _ShowDataState extends State<ShowData> {
+class _DbExamplePageState extends State<DbExamplePage> {
   DbExampleBloc _dbExampleBloc;
 
   @override
