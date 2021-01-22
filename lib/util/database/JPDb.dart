@@ -1,22 +1,20 @@
 import 'dart:io';
 
-import 'UserScript.dart';
+import 'JPScript.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
-
-
-class UserDb {
-  static final UserDb _instance = UserDb._();
+class JPDb {
+  static final JPDb _instance = JPDb._();
   static Database _database;
 
-  final String _databaseName = "USER.db";
+  final String _databaseName = "JP.db";
   final int _databaseVersion = 1;
 
-  UserDb._();
+  JPDb._();
 
-  factory UserDb(){
+  factory JPDb(){
     return _instance;
   }
 
@@ -36,12 +34,12 @@ class UserDb {
   Future<Database> init() async{
     Directory directory = await getApplicationDocumentsDirectory();
     String dbpath = join(directory.path, _databaseName);
-    Database database = await openDatabase(dbpath, password: '',version: _databaseVersion, onCreate: _onCreate, onUpgrade: _onUpgrade);
+    Database database = await openDatabase(dbpath, password: '', version: _databaseVersion, onCreate: _onCreate, onUpgrade: _onUpgrade);
     return database;
   }
 
   void _onCreate(Database db, int version){
-    db.execute(UserScript.CREATE_USER);
+    db.execute(JPScript.CREATE_KANA);
   }
 
   void _onUpgrade(Database db, int oldVersion, int newVersion){
@@ -55,7 +53,7 @@ class UserDb {
 
   Future<List<Map<String, dynamic>>> queryById(String tableName, String id) async{
     Database conn = await getDbConnection();
-    return await conn.query(tableName, where: 'USER_ID=?', whereArgs: [id]);
+    return await conn.query(tableName, where: 'KANA_ID=?', whereArgs: [id]);
   }
 
   Future<int> insert(Map<String, dynamic> row, String tableName) async{
@@ -65,12 +63,12 @@ class UserDb {
 
   Future<int> delete(String id, String tableName) async{
     Database conn = await getDbConnection();
-    return conn.delete(tableName, where: 'USER_ID=?', whereArgs: [id]);
+    return conn.delete(tableName, where: 'KANA_ID=?', whereArgs: [id]);
   }
 
   Future<int> update(Map<String, dynamic> row, String tableName) async{
     Database conn = await getDbConnection();
-    return conn.update(tableName, row, where: 'USER_ID=?', whereArgs: [row['id']]);
+    return conn.update(tableName, row, where: 'KANA_ID=?', whereArgs: [row['KANA_ID']]);
   }
 
   Future closeDb() async{

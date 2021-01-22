@@ -5,7 +5,7 @@ import 'db_example_event.dart';
 import 'db_example_state.dart';
 
 class DbExampleBloc extends Bloc<DbExampleEvent, DbExampleState> {
-  DbExampleController _dbExampleController;
+  DbExampleController dbExampleController;
 
   @override
   DbExampleState get initialState => InitialFirePrmState();
@@ -18,7 +18,7 @@ class DbExampleBloc extends Bloc<DbExampleEvent, DbExampleState> {
    * 初始化資料
    * */
   void _initialData(){
-    _dbExampleController = DbExampleController();
+    dbExampleController = DbExampleController();
   }
 
   @override
@@ -30,6 +30,6 @@ class DbExampleBloc extends Bloc<DbExampleEvent, DbExampleState> {
 
 
   Stream<DbExampleState> _mapQuery() async*{
-    yield QueryState(await _dbExampleController.firstDbMethod());
+    yield QueryState(await dbExampleController.firstDbMethod());
   }
 }
