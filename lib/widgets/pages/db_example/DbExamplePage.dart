@@ -53,6 +53,14 @@ class _DbExamplePageState extends State<DbExamplePage> {
       )
     );
   }
+
+  @override
+  void dispose() {
+//    關DB
+    _dbExampleBloc.dbExampleController.closeDb();
+    print('DbExample Bye Bye');
+    super.dispose();
+  }
 }
 
 class TableWidget extends StatefulWidget {

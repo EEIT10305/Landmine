@@ -6,15 +6,19 @@ class DbExampleController{
 
   Future<List<User>> firstDbMethod() async{
     //先查一下資料是否加入
-    List<User> user = await _userManager.queryById('001');
-    if(user.length == 0){
+    User user = await _userManager.queryById('002');
+    if(user == null){
       _userManager.insert(User(
-          uSERID: '001',
-          uSERNAME: '一號',
-          eMAIL: 'one@gmail.com',
-          pASSWORD: 'onepass',
+          uSERID: '002',
+          uSERNAME: '二號',
+          eMAIL: 'two@gmail.com',
+          pASSWORD: 'twopass',
           uSERAUTHORITY: '0'));
     }
    return await _userManager.queryAll();
+  }
+
+  void closeDb(){
+    _userManager.closeDb();
   }
 }

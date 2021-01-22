@@ -16,6 +16,9 @@ class _ShowImageState extends State<ShowImage> {
   @override
   Widget build(BuildContext context) {
     String base64 = widget.base64;
+    if(base64 == ''){
+      return Container();
+    }
     Uint8List uint8list = Base64Decoder().convert(base64);
     return Container(child: Image.memory(uint8list),);
   }

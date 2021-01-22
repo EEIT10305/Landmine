@@ -31,7 +31,7 @@ void main() {
       child: MyApp(),
     ));
   }, (Object error, StackTrace stack) {
-    print('runZonedError: $error $stack');
+    print('runZonedGuardedError: $error $stack');
   });
 
 //  FlutterError.onError = (FlutterErrorDetails details) {
@@ -103,6 +103,10 @@ class _MyHomePageState extends State<MyHomePage> {
             FirstButton(
               routerName: 'dbexample',
               buttonWord: 'db',
+            ),
+            FirstButton(
+              routerName: 'jpdata',
+              buttonWord: '日本假名存圖',
             ),
           ],
         )),

@@ -18,9 +18,13 @@ class UserManager {
     return users.map((e)=>User.fromJson(e)).toList();
   }
 
-  Future<List<User>> queryById(String id) async{
+  Future<User> queryById(String id) async{
+    User kana;
     List<Map<String, dynamic>> users = await db.queryById(tableName, id);
-    return users.map((e)=>User.fromJson(e)).toList();
+    if(users.length > 0){
+      kana = User.fromJson(users[0]);
+    }
+    return kana;
   }
 
   void insert(User user) async{
@@ -33,5 +37,9 @@ class UserManager {
 
   void update(User user) async{
     await db.update(user.toJson(), tableName);
+  }
+
+  void closeDb() {
+    db.closeDb();
   }
 }
