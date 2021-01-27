@@ -53,7 +53,6 @@ class _FileProviderPageState extends State<FileProviderPage> {
       child: Column(
         verticalDirection: VerticalDirection.down,
         children: [
-//        Expanded(
           TextField(
             controller: textTitleEditingController,
             autofocus: true,
@@ -61,7 +60,6 @@ class _FileProviderPageState extends State<FileProviderPage> {
               hintText: _info,
             ),
           ),
-//        ),
           RaisedButton(
             child: Text('儲存'),
             onPressed: _saveInfo,
