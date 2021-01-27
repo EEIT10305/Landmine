@@ -9,10 +9,12 @@ import 'package:path_provider/path_provider.dart';
 class JPAddKanaController{
   KanaManager _kanaManager = KanaManager.instance;
 
+  Future<KANA> queryById(String text, String catogory) async{
+    return await _kanaManager.queryById('$text$catogory');
+  }
 
   Future<String> addData(String text, String catogory) async{
     //確認是否有資料 => 創資料 => 找有沒有圖 => update時存圖
-
     //先查一下資料是否加入
     KANA kana = await _kanaManager.queryById('$text$catogory');
     if(kana == null){
