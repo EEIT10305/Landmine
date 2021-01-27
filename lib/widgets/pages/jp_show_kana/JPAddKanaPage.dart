@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:archive/archive.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gbk_codec/gbk_codec.dart';
 import 'package:landmine/controllers/JPAddKanaController.dart';
 import 'package:landmine/widgets/MyScaffold.dart';
 import 'package:landmine/widgets/ShowImage.dart';
@@ -27,10 +27,6 @@ class _JPAddKanaPageState extends State<JPAddKanaPage> {
 
   String base64_str = '';
 
-  String gbkDecoder(List<int> responseBytes, RequestOptions options, ResponseBody responseBody) {
-    return gbk_bytes.decode(responseBytes);
-  }
-
   @override
   Widget build(BuildContext context) {
     TextEditingController input = TextEditingController();
@@ -47,9 +43,10 @@ class _JPAddKanaPageState extends State<JPAddKanaPage> {
                     Dio dio = Dio();
                     Response response = await dio.request("http://192.168.100.18:3000/api/JP.zip");
                     final directory = await getApplicationDocumentsDirectory();
-                    File f = File('${directory.path}/JP.zip');
+                    File f = File('${directory.path}/JP.db');
                     var bytes = base64.decode(response.data);
-                    f.writeAsBytesSync(bytes);
+                    Archive archive = ZipDecoder().decodeBytes(bytes);
+                    f.writeAsBytesSync(archive[0].content);
                   } catch (e) {
                     print(e);
                   }},
